@@ -1,0 +1,28 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:z3c="http://namespaces.zope.org/z3c">
+
+  <class class=".widget.OptgroupWidget">
+    <require
+        interface=".interfaces.IOptgroupWidget"
+        permission="zope.Public"
+        />
+  </class>
+
+
+  <!-- This widget is not configured for any field by default. -->
+  <z3c:widgetTemplate
+      layer="z3c.form.interfaces.IFormLayer"
+      mode="display"
+      template="display.pt"
+      widget=".interfaces.IOptgroupWidget"
+      />
+
+  <z3c:widgetTemplate
+      layer="z3c.form.interfaces.IFormLayer"
+      mode="input"
+      template="input.pt"
+      widget=".interfaces.IOptgroupWidget"
+      />
+
+</configure>
