@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.0.1 (2012-04-14)
+------------------
+
+- MANIFEST.in was missing some entries.
+  [Thomas Massmann]
+
+
 1.0 (2012-04-14)
 ----------------
 
