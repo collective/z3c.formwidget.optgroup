@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.1 (2012-04-26):
+-----------------
+
+- Always show no value message as first item.
+  [Thomas Massmann]
+
+
 1.0.1 (2012-04-14)
 ------------------
 
