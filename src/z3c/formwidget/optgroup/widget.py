@@ -59,53 +59,23 @@ class OptgroupWidget(SelectWidget):
     implements(IOptgroupWidget, IFromUnicode)
 
     klass = u'optgroup-widget'
-    items = ()
-
-    def getSize(self):
-        """Get a dynamic size for the widget."""
-        if hasattr(self.field, 'max_length'):
-            self.size = self.field.max_length
-            return
-        if not self.multiple:
-            self.size = 1
-            return
-        amount = len(self.items)
-        for optgroup in range(0, len(self.items)):
-            amount = amount + len(self.items[optgroup]['member'])
-        if amount <= 10:
-            self.size = amount
-        else:
-            self.size = 10
-
-    def displayValue(self):
-        value = {}
-        for token in self.value:
-            # Ignore no value entries. They are in the request only.
-            if token == self.noValueToken:
-                continue
-            term = self.terms.getTermByToken(token)
-            if ITitledTokenizedTerm.providedBy(term):
-                content = self.getContent(term)
-            else:
-                value.append(term.value)
-            if not term.optgroup in value:
-                value[term.optgroup] = []
-            value[term.optgroup].append(content)
-        return value
-
-    def getContent(self, term):
-        return translate(term.title, context=self.request, default=term.title)
 
     def update(self):
         """See z3c.form.interfaces.IWidget."""
         super(OptgroupWidget, self).update()
         widget.addFieldClass(self)
-        self.items = []
-        if (not self.required or self.prompt) and self.multiple is None:
+
+
+    @property
+    def items(self):
+        if self.terms is None:  # update() has not been called yet
+            return ()
+        items = []
+        if self.multiple is None:
             message = self.noValueMessage
             if self.prompt:
                 message = self.promptMessage
-            self.items.append({
+            items.append({
                 'id': self.id + '-novalue',
                 'value': self.noValueToken,
                 'content': message,
@@ -135,8 +105,44 @@ class OptgroupWidget(SelectWidget):
             item = {}
             item['title'] = group
             item['member'] = unordered_items[group]
-            self.items.append(item)
-        self.getSize()
+            items.append(item)
+        self.getSize(items)
+        return items
+
+    def getSize(self, items):
+        """Get a dynamic size for the widget."""
+        if hasattr(self.field, 'max_length'):
+            self.size = self.field.max_length
+            return
+        if not self.multiple:
+            self.size = 1
+            return
+        amount = len(items)
+        for optgroup in range(0, len(items)):
+            amount = amount + len(items[optgroup]['member'])
+        if amount <= 10:
+            self.size = amount
+        else:
+            self.size = 10
+
+    def displayValue(self):
+        value = {}
+        for token in self.value:
+            # Ignore no value entries. They are in the request only.
+            if token == self.noValueToken:
+                continue
+            term = self.terms.getTermByToken(token)
+            if ITitledTokenizedTerm.providedBy(term):
+                content = self.getContent(term)
+            else:
+                value.append(term.value)
+            if not term.optgroup in value:
+                value[term.optgroup] = []
+            value[term.optgroup].append(content)
+        return value
+
+    def getContent(self, term):
+        return translate(term.title, context=self.request, default=term.title)
 
 
 @adapter(converter.FieldDataConverter)
