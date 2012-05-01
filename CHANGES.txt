@@ -1,8 +1,15 @@
 Changelog
 =========
 
-1.1 (2012-04-26):
------------------
+1.2 (2012-05-01)
+----------------
+
+- Fixed wrong html tag for display mode template.
+  [Thomas Massmann]
+
+
+1.1 (2012-04-26)
+----------------
 
 - Always show no value message as first item.
   [Thomas Massmann]
