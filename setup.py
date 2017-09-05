@@ -20,15 +20,12 @@ from setuptools import setup, find_packages
 version = '1.2'
 
 long_description = (
-    open('README.txt').read()
-    + '\n' +
+    open('README.txt').read() + '\n' +
     'Contributors\n'
-    '============\n'
-    + '\n' +
-    open('CONTRIBUTORS.txt').read()
-    + '\n' +
-    open('CHANGES.txt').read()
-    + '\n')
+    '============\n' + '\n' +
+    open('CONTRIBUTORS.txt').read() + '\n' +
+    open('CHANGES.txt').read() + '\n'
+)
 
 setup(
     name='z3c.formwidget.optgroup',
