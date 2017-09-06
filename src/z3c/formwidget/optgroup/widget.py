@@ -16,27 +16,30 @@
 """An optgroup widget for z3c.form."""
 
 # zope imports
-from z3c.form import converter, interfaces
+from z3c.form import converter
+from z3c.form import interfaces
 from z3c.form.browser import widget
 from z3c.form.browser.select import SelectWidget
 from z3c.form.widget import FieldWidget
-from zope.component import adapter, getMultiAdapter
-from zope.schema.interfaces import (IFromUnicode, ITextLine,
-    ITitledTokenizedTerm, ITokenizedTerm)
-from zope.i18n import translate
-from zope.interface import implementer, implements
-from zope.interface.declarations import directlyProvides
-
 # local imports
 from z3c.formwidget.optgroup.interfaces import IOptgroupWidget
+from zope.component import adapter
+from zope.component import getMultiAdapter
+from zope.i18n import translate
+from zope.interface import implementer
+from zope.interface.declarations import directlyProvides
+from zope.schema.interfaces import IFromUnicode
+from zope.schema.interfaces import ITextLine
+from zope.schema.interfaces import ITitledTokenizedTerm
+from zope.schema.interfaces import ITokenizedTerm
 
 
+@implementer(ITokenizedTerm)
 class OptgroupTerm(object):
     """A SimpleTerm with an aditional attribute "optgroup".
 
     It's also a tokenized term used by SimpleVocabulary.
     """
-    implements(ITokenizedTerm)
 
     def __init__(self, value, token=None, title=None, optgroup=None):
         """Create a term for value and token.
@@ -50,13 +53,13 @@ class OptgroupTerm(object):
             token = value
         self.token = str(token)
         self.title = title
-        if title is not None:
-            directlyProvides(self, ITitledTokenizedTerm)
+        if title:
+            directlyProvides(self, ITitledTokenizedTerm)  # NOQA: D001
 
 
+@implementer(IOptgroupWidget, IFromUnicode)
 class OptgroupWidget(SelectWidget):
     """Optgroup widget based on SelectWidget."""
-    implements(IOptgroupWidget, IFromUnicode)
 
     klass = u'optgroup-widget'
 
@@ -78,21 +81,21 @@ class OptgroupWidget(SelectWidget):
                 'id': self.id + '-novalue',
                 'value': self.noValueToken,
                 'content': message,
-                'selected': self.value == []
-                })
+                'selected': self.value == [],
+            })
         unordered_items = {}
         optgroups = []
         for count, term in enumerate(self.terms):
             # Exctract optgroups in an ordered list, so we can use this to
             # preserve the main order of optgroups.
-            if not term.optgroup in optgroups:
+            if term.optgroup not in optgroups:
                 optgroups.append(term.optgroup)
             selected = self.isSelected(term)
-            id = '%s-%i' % (self.id, count)
+            id = '{id:s}-{count:d}'.format(id=self.id, count=count)
             content = term.title
             if ITitledTokenizedTerm.providedBy(term):
                 content = self.getContent(term)
-            if not term.optgroup in unordered_items:
+            if term.optgroup not in unordered_items:
                 unordered_items[term.optgroup] = []
             unordered_items[term.optgroup].append({
                 'id': id,
@@ -110,7 +113,7 @@ class OptgroupWidget(SelectWidget):
 
     def getSize(self, items):
         """Get a dynamic size for the widget."""
-        if hasattr(self.field, 'max_length'):
+        if getattr(self.field, 'max_length', None):
             self.size = self.field.max_length
             return
         if not self.multiple:
@@ -135,7 +138,7 @@ class OptgroupWidget(SelectWidget):
                 content = self.getContent(term)
             else:
                 value.append(term.value)
-            if not term.optgroup in value:
+            if term.optgroup not in value:
                 value[term.optgroup] = []
             value[term.optgroup].append(content)
         return value
@@ -150,10 +153,18 @@ class OptgroupWidget(SelectWidget):
 def OptgroupFieldWidget(field, request):
     """Factory for OptgroupWidget."""
     widget = FieldWidget(field, OptgroupWidget(request))
-    if hasattr(field, 'value_type'):
-        widget.multiple = getMultiAdapter((field,
-            field.value_type, request), interfaces.IFieldWidget).multiple
+    if getattr(field, 'value_type', None):
+        widget.multiple = getMultiAdapter(
+            (
+                field,
+                field.value_type,
+                request,
+            ),
+            interfaces.IFieldWidget,
+        ).multiple
     else:
-        widget.multiple = getMultiAdapter((field, request),
-            interfaces.IFieldWidget).multiple
+        widget.multiple = getMultiAdapter(
+            (field, request),
+            interfaces.IFieldWidget,
+        ).multiple
     return widget

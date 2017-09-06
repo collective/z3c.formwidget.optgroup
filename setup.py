@@ -15,9 +15,11 @@
 ##############################################################################
 """"""
 
-from setuptools import setup, find_packages
+from setuptools import find_packages
+from setuptools import setup
 
-version = '1.2'
+
+version = '1.3'
 
 long_description = (
     open('README.txt').read() + '\n' +
@@ -30,25 +32,25 @@ long_description = (
 setup(
     name='z3c.formwidget.optgroup',
     version=version,
-    description="An optgroup widget for z3c.form.",
+    description='An optgroup widget for z3c.form.',
     long_description=long_description,
     # Get more strings from
     # http://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
-        "Development Status :: 4 - Beta",
-        "Environment :: Web Environment",
-        "Framework :: Zope3",
-        "Intended Audience :: Developers",
-        "License :: OSI Approved :: GNU Library or Lesser General Public " \
-        "License (LGPL)",
-        "License :: OSI Approved :: Zope Public License",
-        "Programming Language :: Python",
-        "Topic :: Software Development :: Libraries :: Python Modules",
+        'Development Status :: 4 - Beta',
+        'Environment :: Web Environment',
+        'Framework :: Zope3',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: GNU Library or Lesser General Public ' \
+        'License (LGPL)',
+        'License :: OSI Approved :: Zope Public License',
+        'Programming Language :: Python',
+        'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     keywords='zope zope3 z3c.form',
     author='Thomas Massmann',
     author_email='thomas.massmann@inqbus.de',
-    url='https://github.com/tmassman/z3c.formwidget.optgroup',
+    url='https://github.com/collective/z3c.formwidget.optgroup',
     download_url='http://pypi.python.org/pypi/z3c.formwidget.optgroup',
     license='ZPL 2.1',
     packages=find_packages('src'),
