@@ -34,8 +34,13 @@ When you create your vocabularies (e.g. using ``SimpleVocabulary``), instead of 
 
     ...
     for country in pycountry.countries:
-        terms.append(SimpleTerm(value=country.alpha2, token=country.alpha2,
-                                title=country.name))
+        terms.append(
+            SimpleTerm(
+                value=country.alpha2,
+                token=country.alpha2,
+                title=country.name,
+            )
+        )
     ...
 
 
@@ -47,8 +52,14 @@ you add ``OptgroupTerm`` items::
     country_list = countries(context)
     for item in pycountry.subdivisions:
         parent = country_list.getTermByToken(item.country_code).title
-        terms.append(OptgroupTerm(value=item.code, token=item.code,
-                                  title=item.name, optgroup=parent))
+        terms.append(
+            OptgroupTerm(
+                value=item.code,
+                token=item.code,
+                title=item.name,
+                optgroup=parent,
+            )
+        )
     ...
 
 

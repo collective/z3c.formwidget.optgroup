@@ -15,20 +15,22 @@
 ##############################################################################
 """An optgroup widget for z3c.form."""
 
-# zope imports
-from z3c.form import converter, interfaces
+from z3c.form import converter
+from z3c.form import interfaces
 from z3c.form.browser import widget
 from z3c.form.browser.select import SelectWidget
 from z3c.form.widget import FieldWidget
-from zope.component import adapter, getMultiAdapter
-from zope.schema.interfaces import (IFromUnicode, ITextLine,
-    ITitledTokenizedTerm, ITokenizedTerm)
-from zope.i18n import translate
-from zope.interface import implementer, implements
-from zope.interface.declarations import directlyProvides
-
-# local imports
 from z3c.formwidget.optgroup.interfaces import IOptgroupWidget
+from zope.component import adapter
+from zope.component import getMultiAdapter
+from zope.i18n import translate
+from zope.interface import implementer
+from zope.interface import implements
+from zope.interface.declarations import directlyProvides
+from zope.schema.interfaces import IFromUnicode
+from zope.schema.interfaces import ITextLine
+from zope.schema.interfaces import ITitledTokenizedTerm
+from zope.schema.interfaces import ITokenizedTerm
 
 
 class OptgroupTerm(object):

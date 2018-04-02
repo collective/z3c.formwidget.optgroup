@@ -1,1 +1,14 @@
 dist
+/.tox/
+/bin/
+/parts/
+/develop-eggs/
+/reports/
+.coverage*
+coverage.xml
+/htmlcov/
+.installed.cfg
+.mr.developer.cfg
+.python-version
+*.egg-info/
+*.py[cod]
