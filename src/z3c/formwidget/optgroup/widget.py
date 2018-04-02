@@ -82,7 +82,7 @@ class OptgroupWidget(SelectWidget):
                     'value': self.noValueToken,
                     'content': message,
                     'selected': self.value == [],
-                }
+                },
             )
         unordered_items = {}
         optgroups = []
@@ -92,7 +92,7 @@ class OptgroupWidget(SelectWidget):
             if term.optgroup not in optgroups:
                 optgroups.append(term.optgroup)
             selected = self.isSelected(term)
-            id = '%s-%i' % (self.id, count)
+            id = '{id}-{count}'.format(id=self.id,count=str(count))
             content = term.title
             if ITitledTokenizedTerm.providedBy(term):
                 content = self.getContent(term)
