@@ -76,25 +76,27 @@ class OptgroupWidget(SelectWidget):
             message = self.noValueMessage
             if self.prompt:
                 message = self.promptMessage
-            items.append({
-                'id': self.id + '-novalue',
-                'value': self.noValueToken,
-                'content': message,
-                'selected': self.value == []
-                })
+            items.append(
+                {
+                    'id': self.id + '-novalue',
+                    'value': self.noValueToken,
+                    'content': message,
+                    'selected': self.value == [],
+                }
+            )
         unordered_items = {}
         optgroups = []
         for count, term in enumerate(self.terms):
             # Exctract optgroups in an ordered list, so we can use this to
             # preserve the main order of optgroups.
-            if not term.optgroup in optgroups:
+            if term.optgroup not in optgroups:
                 optgroups.append(term.optgroup)
             selected = self.isSelected(term)
             id = '%s-%i' % (self.id, count)
             content = term.title
             if ITitledTokenizedTerm.providedBy(term):
                 content = self.getContent(term)
-            if not term.optgroup in unordered_items:
+            if term.optgroup not in unordered_items:
                 unordered_items[term.optgroup] = []
             unordered_items[term.optgroup].append({
                 'id': id,
@@ -137,7 +139,7 @@ class OptgroupWidget(SelectWidget):
                 content = self.getContent(term)
             else:
                 value.append(term.value)
-            if not term.optgroup in value:
+            if term.optgroup not in value:
                 value[term.optgroup] = []
             value[term.optgroup].append(content)
         return value
@@ -153,9 +155,17 @@ def OptgroupFieldWidget(field, request):
     """Factory for OptgroupWidget."""
     widget = FieldWidget(field, OptgroupWidget(request))
     if hasattr(field, 'value_type'):
-        widget.multiple = getMultiAdapter((field,
-            field.value_type, request), interfaces.IFieldWidget).multiple
+        widget.multiple = getMultiAdapter(
+            (
+                field,
+                field.value_type,
+                request,
+            ),
+            interfaces.IFieldWidget,
+        ).multiple
     else:
-        widget.multiple = getMultiAdapter((field, request),
-            interfaces.IFieldWidget).multiple
+        widget.multiple = getMultiAdapter(
+            (field, request),
+            interfaces.IFieldWidget,
+        ).multiple
     return widget
