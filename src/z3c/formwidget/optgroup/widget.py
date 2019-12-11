@@ -31,6 +31,7 @@ from zope.interface.declarations import directlyProvides
 
 # local imports
 from z3c.formwidget.optgroup.interfaces import IOptgroupWidget
+from six.moves import range
 
 @implementer(ITokenizedTerm)
 class OptgroupTerm(object):
