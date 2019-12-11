@@ -1,1 +1,5 @@
-Thomas Massmann, Author
+Contributors
+============
+
+- Thomas Massmann, Author
+- 1letter, 1letter@gmx.de
