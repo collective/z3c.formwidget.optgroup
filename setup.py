@@ -15,9 +15,10 @@
 ##############################################################################
 """"""
 
-from setuptools import setup, find_packages
+from setuptools import find_packages
+from setuptools import setup
 
-version = '1.2'
+version = '1.3'
 
 long_description = (
     open('README.txt').read()
@@ -46,6 +47,9 @@ setup(
         "License (LGPL)",
         "License :: OSI Approved :: Zope Public License",
         "Programming Language :: Python",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     keywords='zope zope3 z3c.form',
