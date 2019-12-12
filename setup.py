@@ -42,9 +42,6 @@ setup(
         "Development Status :: 4 - Beta",
         "Environment :: Web Environment",
         "Framework :: Zope3",
-        "Framework :: Plone",
-        "Framework :: Plone :: Addon",
-        "Framework :: Plone :: 5.2",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: GNU Library or Lesser General Public " \
         "License (LGPL)",
